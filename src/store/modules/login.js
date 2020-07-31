@@ -7,11 +7,12 @@ export default {
         user: {}
     },
     getters: {
+        api_error: state => state.error,
         isLoggedIn: state => state.user.username
     },
     actions: {
         async login({ commit }, payload) {
-            try {     
+            try {
                 commit("login_progress", true);
                 // const response = await axios.post("https://reqres.in/api/login", payload);
                 const response = await axios({
@@ -22,7 +23,7 @@ export default {
                     }
                 });
                 delete payload.password;
-                commit("login", payload);
+                // commit("login", payload);
                 payload.token = response;
                 commit("login_progress", false);
             } catch (err) {
@@ -40,7 +41,6 @@ export default {
         },
         login_fail: (state, data) => {
             state.error = data;
-            console.log(data)
         },
         login_progress: (state, data) => {
             state.login_progress = data;

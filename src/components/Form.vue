@@ -8,13 +8,16 @@
       <b-field label="Password">
         <b-input type="password" v-model="password"></b-input>
       </b-field>
-      <button @click="loginClick" :class="{ 'button': true, 'is-full' : true}">Login</button>
+      <button
+        @click="loginClick"
+        :class="{ 'button': true, 'is-full' : true, 'is-loading' : login_progress}"
+      >Login</button>
     </section>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Form",
 
@@ -40,6 +43,22 @@ export default {
       }
     },
   },
+
+  computed: {
+    ...mapGetters({
+      api_error: "api_error",
+    }),
+
+    login_progress() {
+      return this.$store.state.login.login_progress;
+    },
+  },
+
+  watch: {
+    api_error(api_error_response){
+      alert(api_error_response)
+    }
+  }
 };
 </script>
 
