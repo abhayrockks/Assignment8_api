@@ -2,10 +2,12 @@
   <div id="submitForm">
     <section>
       <b-field label="Username">
+        eve.holt@reqres.in
         <b-input required v-model="username" maxlength="30"></b-input>
       </b-field>
 
       <b-field label="Password">
+        cityslicka
         <b-input type="password" v-model="password"></b-input>
       </b-field>
       <button
@@ -29,17 +31,15 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
-    loginClick() {
-      if (this.username !== "Abhay") {
-        return alert("Username is Abhay");
-      } else if (this.password !== "123") {
-        return alert("Password is 123");
-      } else {
-        this.login({
-          username: this.username,
-          password: this.password,
-        });
+    async loginClick() {
+      const response = await this.login({
+        username: this.username,
+        password: this.password,
+      });
+      if (response) {
         this.$router.push("profile");
+      } else {
+        alert(this.api_error);
       }
     },
   },
@@ -53,12 +53,6 @@ export default {
       return this.$store.state.login.login_progress;
     },
   },
-
-  watch: {
-    api_error(api_error_response){
-      alert(api_error_response)
-    }
-  }
 };
 </script>
 

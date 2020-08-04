@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
     <div class="navbar-item">
-     <a><router-link to="/">Home</router-link></a>
+      <a>
+        <router-link to="/">Home</router-link>
+      </a>
       <p v-if="isLoggedIn">{{isLoggedIn}}</p>
     </div>
     <div class="navbar-menu">
@@ -20,7 +22,6 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Header",
 
-  
   computed: {
     ...mapGetters({
       isLoggedIn: "isLoggedIn",
@@ -31,7 +32,9 @@ export default {
       dologout: "logout",
     }),
     login() {
-      this.$router.push("login");
+      if (this.$route.name !== "Login") {
+        this.$router.push("login");
+      }
     },
     logout() {
       this.dologout();
