@@ -4,7 +4,7 @@ export default {
     state: {
         error: false,
         login_progress: false,
-        user: {}
+        user: {},
     },
     getters: {
         api_error: state => state.error,
@@ -14,24 +14,20 @@ export default {
         async login({ commit }, payload) {
             try {
                 commit("login_progress", true);
-                // const response = await axios.post("https://reqres.in/api/login", payload);
-                const response = await axios({
-                    method: 'post',
-                    url: 'https://reqres.in/api/login',
-                    data: {
-                        payload
-                    }
-                });
+                const response = await axios.post("https://reqres.in/api/login", payload);
                 delete payload.password;
-                // commit("login", payload);
+                commit("login", payload);
                 payload.token = response;
                 commit("login_progress", false);
+                return true
             } catch (err) {
                 commit("login_progress", false);
                 commit("login_fail", err)
+                return false
             }
         },
         logout({ commit }) {
+
             commit("logout")
         }
     },
