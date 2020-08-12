@@ -15,7 +15,7 @@ export default {
             try {
                 commit("login_progress", true);
                 const response = await axios.post("https://reqres.in/api/login", payload);
-                console.log(response)
+                payload.token = response;
                 delete payload.password;
                 commit("login", payload);
                 commit("login_progress", false);
