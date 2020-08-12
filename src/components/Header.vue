@@ -4,13 +4,13 @@
       <a>
         <router-link to="/">Home</router-link>
       </a>
-      <p v-if="isLoggedIn">{{isLoggedIn}}</p>
+      <p v-if="user">{{user}}</p>
     </div>
     <div class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item">
-          <a v-if="!isLoggedIn" @click="login" class="button is-white">Login</a>
-          <a v-if="isLoggedIn" @click="logout" class="button is-white">Logout</a>
+          <a v-if="!user" @click="login" class="button is-white">Login</a>
+          <a v-if="user" @click="logout" class="button is-white">Logout</a>
         </div>
       </div>
     </div>
@@ -18,13 +18,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Header",
-
   computed: {
-    ...mapGetters({
-      isLoggedIn: "isLoggedIn",
+    ...mapState({
+      user: state => state.user.username
     }),
   },
   methods: {

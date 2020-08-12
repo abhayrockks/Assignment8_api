@@ -22,7 +22,6 @@
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Form",
-
   data() {
     return {
       username: "",
@@ -43,12 +42,10 @@ export default {
       }
     },
   },
-
   computed: {
     ...mapGetters({
       api_error: "api_error",
     }),
-
     login_progress() {
       return this.$store.state.login.login_progress;
     },

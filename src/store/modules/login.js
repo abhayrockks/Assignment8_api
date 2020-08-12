@@ -1,23 +1,23 @@
 import axios from 'axios'
 
 export default {
+    namespaced: true,
     state: {
         error: false,
         login_progress: false,
         user: {},
     },
     getters: {
-        api_error: state => state.error,
-        isLoggedIn: state => state.user.username
+        api_error: state => state.error
     },
     actions: {
         async login({ commit }, payload) {
             try {
                 commit("login_progress", true);
                 const response = await axios.post("https://reqres.in/api/login", payload);
+                console.log(response)
                 delete payload.password;
                 commit("login", payload);
-                payload.token = response;
                 commit("login_progress", false);
                 return true
             } catch (err) {
